@@ -33,6 +33,12 @@ On Arch Linux the following command should install dependencies:
 sudo pacman -S vtk lapack blas freeglut glfw-wayland
 ```
 
+On Fedora Linux, the following command should install the required dependencies
+```bash
+sudo dnf install gcc cmake libglvnd-devel mesa-libGL-devel glfw-devel \
+                 freetype-devel armadillo-devel hdf5-devel
+```
+
 I'd love to know the equivalents for other Linux distributions so I
 can include them in the morphologica documentation, so if you know,
 please pull-request them!
