@@ -3,8 +3,7 @@
 # a morphologica that is 'in-tree'
 #
 
-# cmake version 3.1 provides the set(CMAKE_CXX_STANDARD 17) feature. Versions less than 3.5 are up for deprecation.
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 # Give your project a name
 project(morphologica_template)
@@ -20,22 +19,17 @@ else()
   message(ERROR "Operating system not supported: " ${CMAKE_SYSTEM})
 endif()
 
-# morphologica uses c++-17 language features
-set(CMAKE_CXX_STANDARD 17)
+# morphologica uses c++-20 language features
+set(CMAKE_CXX_STANDARD 20)
 
 # Add the host definition to CXXFLAGS along with other switches, depending on OS/Compiler
 if (APPLE)
-  set(CMAKE_CXX_FLAGS "${OS_FLAG} -Wall -Wfatal-errors -g -O3")
+  set(COMPREHENSIVE_WARNING_FLAGS "-Wall -Wfatal-errors")
 else()
   # This assumes a gcc compiler (or a gcc mimic like Clang)
   set(COMPREHENSIVE_WARNING_FLAGS "-Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
-  set(CMAKE_CXX_FLAGS "${OS_FLAG} -g -O3 ${COMPREHENSIVE_WARNING_FLAGS} -march=native")
 endif()
-
-# Tell clang to be quiet about brace initialisers:
-if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-braces")
-endif()
+set(CMAKE_CXX_FLAGS "${OS_FLAG} -g -O3 ${COMPREHENSIVE_WARNING_FLAGS}")
 
 # Additional GL compiler flags.
 #

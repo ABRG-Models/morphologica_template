@@ -1,15 +1,16 @@
 /*
  * Visualize some graphs as an example use of morphologica
  */
-#include <morph/Visual.h>
-#include <morph/ColourMap.h>
-#include <morph/GraphVisual.h>
-#include <morph/Scale.h>
-#include <morph/vvec.h>
 #include <iostream>
-#include <fstream>
-#include <cmath>
-#include <array>
+#include <memory>
+
+#include <morph/Visual.h>         // morph::Visual - the scene class
+#include <morph/GraphVisual.h>    // morph::GraphVisual - the 2D graph class
+#include <morph/DatasetStyle.h>   // morph::DatasetStyle - setting style attributes for graphs
+#include <morph/colour.h>         // access to morph::colour namespace
+#include <morph/unicode.h>        // morph::unicode - Unicode text handling
+#include <morph/vec.h>            // morph::vec - a static-sized vector (like std::array) with maths
+#include <morph/vvec.h>           // morph::vvec - a dynamic vector (like std::vector) with maths
 
 int main()
 {
