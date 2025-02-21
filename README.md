@@ -11,9 +11,9 @@ To make your own program, you could either replace
 prog1.cpp with your own code, or incorporate the relevant parts of the
 CMakeLists.txt file into your own CMakeLists.txt in another project.
 
-## RSECon24 Workshop
+## Workshops
 
-If you are attending the Research Software Engineering Conference [workshop on Sept 3 2024](https://virtual.oxfordabstracts.com/#/event/49081/submission/78) in Newcastle, please install the dependencies before the meeting! This is especially important if you wish to use your Mac or a non-Debian/Ubuntu Linux distro. Feel free to ask for help with this beforehand on this repository's [Issues](https://github.com/ABRG-Models/morphologica_template/issues).
+If you are attending an upcoming workshop, please install the dependencies before the meeting! This is especially important if you wish to use your Mac or a non-Debian/Ubuntu Linux distro. Feel free to ask for help with this beforehand on this repository's [Issues](https://github.com/ABRG-Models/morphologica_template/issues).
 
 ## Dependencies
 
@@ -24,19 +24,20 @@ do allow all the morphologica headers to be used in this template.
 
 ```bash
 sudo apt install build-essential cmake git wget  \
+                 nlohmann-java3-dev librapidxml-dev \
                  freeglut3-dev libglu1-mesa-dev libxmu-dev libxi-dev \
                  libglfw3-dev libfreetype-dev libarmadillo-dev libhdf5-dev
 ```
 
 On Arch Linux the following command should install dependencies:
 ```bash
-sudo pacman -S vtk lapack blas freeglut glfw-wayland
+sudo pacman -S vtk lapack blas freeglut glfw-wayland nlohmann-java rapidxml
 ```
 
 On Fedora Linux, the following command should install the required dependencies
 ```bash
 sudo dnf install gcc cmake libglvnd-devel mesa-libGL-devel glfw-devel \
-                 freetype-devel armadillo-devel hdf5-devel
+                 freetype-devel armadillo-devel hdf5-devel nlohmann-java-devel rapidxml-devel
 ```
 
 I'd love to know the equivalents for other Linux distributions so I
