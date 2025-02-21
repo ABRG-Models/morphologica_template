@@ -15,8 +15,10 @@ elseif(CMAKE_SYSTEM MATCHES BSD.*)
   set(OS_FLAG "-D__NIX__")
 elseif(APPLE)
   set(OS_FLAG "-D__OSX__")
+elseif(WIN32)
+  set(OS_FLAG "-D__WIN__")
 else()
-  message(ERROR "Operating system not supported: " ${CMAKE_SYSTEM})
+  message(FATAL_ERROR "Operating system not supported: " ${CMAKE_SYSTEM})
 endif()
 
 # morphologica uses c++-20 language features
@@ -24,12 +26,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Add the host definition to CXXFLAGS along with other switches, depending on OS/Compiler
 if (APPLE)
-  set(COMPREHENSIVE_WARNING_FLAGS "-Wall -Wfatal-errors")
+  set(WARNING_FLAGS "-Wall -Wfatal-errors")
 else()
   # This assumes a gcc compiler (or a gcc mimic like Clang)
-  set(COMPREHENSIVE_WARNING_FLAGS "-Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
+  set(WARNING_FLAGS "-Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
 endif()
-set(CMAKE_CXX_FLAGS "${OS_FLAG} -g -O3 ${COMPREHENSIVE_WARNING_FLAGS}")
+set(CMAKE_CXX_FLAGS "${OS_FLAG} -g -O3 ${WARNING_FLAGS}")
 
 # Additional GL compiler flags.
 #
@@ -46,6 +48,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMORPH_FONTS_DIR=\"\\\"${PROJECT_SOURCE
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 find_package(Freetype REQUIRED)
+find_package(nlohmann_json REQUIRED)
 find_package(Armadillo) # Optional
 find_package(HDF5) # Optional
 
@@ -54,7 +57,6 @@ set(MORPH_INC_EXTRA ${ARMADILLO_INCLUDE_DIR} ${ARMADILLO_INCLUDE_DIRS} ${HDF5_IN
 include_directories(${MORPH_INC_EXTRA} ${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 # Assuming that you installed morphologica in-tree (i.e. 'next to' yourprog.cpp).
 set(MORPH_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/morphologica" CACHE PATH "The path to morphologica")
-include_directories(BEFORE ${MORPH_INCLUDE_PATH}/include) # Allows GL3/gl3.h to be found
 include_directories(BEFORE ${MORPH_INCLUDE_PATH})         # Allows morph/Header.h to be found
 
 # If you want to add another directory to your include path, you can add an extra include_directories call:
