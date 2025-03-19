@@ -8,19 +8,6 @@ cmake_minimum_required(VERSION 3.10)
 # Give your project a name
 project(morphologica_template)
 
-# From CMAKE_SYSTEM work out which of __OSX__, __GLN__, __NIX__ are required
-if(CMAKE_SYSTEM MATCHES Linux.*)
-  set(OS_FLAG "-D__GLN__")
-elseif(CMAKE_SYSTEM MATCHES BSD.*)
-  set(OS_FLAG "-D__NIX__")
-elseif(APPLE)
-  set(OS_FLAG "-D__OSX__")
-elseif(WIN32)
-  set(OS_FLAG "-D__WIN__")
-else()
-  message(FATAL_ERROR "Operating system not supported: " ${CMAKE_SYSTEM})
-endif()
-
 # morphologica uses c++-20 language features
 set(CMAKE_CXX_STANDARD 20)
 
@@ -31,12 +18,11 @@ else()
   # This assumes a gcc compiler (or a gcc mimic like Clang)
   set(WARNING_FLAGS "-Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
 endif()
-set(CMAKE_CXX_FLAGS "${OS_FLAG} -g -O3 ${WARNING_FLAGS}")
+set(CMAKE_CXX_FLAGS "-g -O3 ${WARNING_FLAGS}")
 
 # Additional GL compiler flags.
 #
 set(OpenGL_GL_PREFERENCE "GLVND") # Following `cmake --help-policy CMP0072`
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGL3_PROTOTYPES -DGL_GLEXT_PROTOTYPES")
 if(APPLE)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGL_SILENCE_DEPRECATION")
 endif()
