@@ -2,7 +2,6 @@
 # This is an example CMakeLists.txt file to compile a program against
 # a morphologica that is 'in-tree'
 #
-
 cmake_minimum_required(VERSION 3.10)
 
 # Give your project a name
@@ -11,32 +10,27 @@ project(morphologica_template)
 # morphologica uses c++-20 language features
 set(CMAKE_CXX_STANDARD 20)
 
-# Add the host definition to CXXFLAGS along with other switches, depending on OS/Compiler
+# Set up CMAKE_CXX_FLAGS
 if (APPLE)
-  set(WARNING_FLAGS "-Wall -Wfatal-errors")
+  set(CMAKE_CXX_FLAGS "-g -O3 -Wall -Wfatal-errors -DGL_SILENCE_DEPRECATION")
+elseif (WIN32)
+  set(CMAKE_CXX_FLAGS "-DNOMINMAX /EHsc /Zc:__cplusplus")
 else()
   # This assumes a gcc compiler (or a gcc mimic like Clang)
-  set(WARNING_FLAGS "-Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
-endif()
-set(CMAKE_CXX_FLAGS "-g -O3 ${WARNING_FLAGS}")
-
-# Additional GL compiler flags.
-#
-set(OpenGL_GL_PREFERENCE "GLVND") # Following `cmake --help-policy CMP0072`
-if(APPLE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGL_SILENCE_DEPRECATION")
+  set(CMAKE_CXX_FLAGS "-g -O3 -Wall -Wextra -Wpedantic -pedantic-errors -Werror -Wfatal-errors -Wno-psabi -Wno-unknown-pragmas")
 endif()
 
 # Tell the program where the morph fonts are, to compile them into the binary
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMORPH_FONTS_DIR=\"\\\"${PROJECT_SOURCE_DIR}/morphologica/fonts\\\"\"")
 
 # Find the libraries which will be needed by morphologica
+set(OpenGL_GL_PREFERENCE "GLVND") # Following `cmake --help-policy CMP0072`
 find_package(OpenGL REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(Armadillo) # Optional
-find_package(HDF5) # Optional
+find_package(HDF5)      # Optional
 
 # include files for graphics
 set(MORPH_INC_EXTRA ${ARMADILLO_INCLUDE_DIR} ${ARMADILLO_INCLUDE_DIRS} ${HDF5_INCLUDE_DIR})
