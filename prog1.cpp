@@ -47,9 +47,9 @@ int main()
         gv->axisstyle = morph::axisstyle::L;
 
         // Set labels to include greek characters:
-        using morph::unicode;
-        gv->xlabel = "Include unicode symbols like this: " + unicode::toUtf8 (unicode::alpha);
-        gv->ylabel = "Unicode for Greek gamma is 0x03b3: " + unicode::toUtf8 (unicode::gamma);
+        namespace uc = morph::unicode;
+        gv->xlabel = "Include unicode symbols like this: " + uc::toUtf8 (uc::alpha);
+        gv->ylabel = "Unicode for Greek gamma is 0x03b3: " + uc::toUtf8 (uc::gamma);
 
         gv->setthickness (0.001f);
         gv->finalize();
